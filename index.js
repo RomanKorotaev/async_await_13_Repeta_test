@@ -36,14 +36,51 @@ console.log("Test")
 //  console.log("После try...catch")
 
 
- //----------------------
+ //---------------------- Асинхронные функции   async  -----------------
 
-async function getFruit(name) {
-    const Fruits = {
+
+ // //Пример синтаксиса для async функций, методов объектов, классов:
+
+// async function fn() { } // для функции
+
+// const fn = async function () { } // для функционального выражения
+
+// const arr = async () => { } // для стрелочной функции
+
+// const x = {  // для метода объекта
+//     async geName() { }
+// }
+
+// class X {  // для метода класса
+//     async getName() { }
+// }
+ 
+
+ function getFruit(name) {
+    const fruits = {
         strasberry: 'клубника',
         kiwi: 'киви',
         apple: 'яблоко'
     }
+    return Promise.resolve(fruits[name]);  
 };
 
-getFruit().then(console.log);
+function makeSmoothie() {
+    getFruit('apple').then(apple => console.log(apple));
+
+    getFruit('kiwi').then(apple => console.log(apple));
+ }
+
+makeSmoothie();
+
+
+
+async function asyncMakeSmoothie() {
+    const apple = await getFruit('apple');
+    console.log(apple);
+
+    const kiwi = await getFruit('kiwi');
+    console.log(kiwi);
+ }
+
+asyncMakeSmoothie();
