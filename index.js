@@ -62,7 +62,7 @@ console.log("Test")
         kiwi: 'киви',
         apple: 'яблоко'
     }
-    return Promise.resolve(fruits[name]);  
+    return new Promise ( (resolve, reject) => setTimeout( ()=> resolve(fruits[name]), 500));  
 };
 
 function makeSmoothie() {
@@ -76,11 +76,26 @@ makeSmoothie();
 
 
 async function asyncMakeSmoothie() {
-    const apple = await getFruit('apple');
-    console.log(apple);
 
-    const kiwi = await getFruit('kiwi');
-    console.log(kiwi);
+    try {
+         //   console.time('asyncMakeSmoothie')  // Для проверки выполнения кода ставим метки :
+        //  //в начале и  console.timeEnd('asyncMakeSmoothie') в конце
+        const apple =  getFruit('apple');
+        const kiwi = getFruit('kiwi');
+        const strasberry = getFruit('strasberry');
+
+        const fruits = await Promise.all([apple, kiwi, strasberry]);
+        console.log(fruits);
+
+        return fruits;
+       // console.timeEnd('asyncMakeSmoothie')
+
+    }catch (error) {
+        console.log ("Ошибка!", error)
+    }
+
+    
  }
 
 asyncMakeSmoothie();
+asyncMakeSmoothie().then(fruits => console.log (fruits) )
